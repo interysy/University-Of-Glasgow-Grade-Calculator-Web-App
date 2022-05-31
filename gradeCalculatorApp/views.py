@@ -9,27 +9,28 @@ def index(request):
     return render(request , 'index.html' , {'grades' : lst}) 
      
          
-class AddModule(View): 
+class AddModule(View):  
      
-    def get(self,request):  
+    def __init__(self):  
         file = open('./static/json/grades.json')  
-        data = json.load(file)  
+        self.data = json.load(file)   
+        
+    def get(self,request):  
           
         ctxt = {} 
         grades = []
-        for line in data: 
+        for line in self.data: 
             grades.append(line['grade']) 
         ctxt['grades'] = grades
 
-        
-        # toReturn = "$('#components').append('<div class = 'one-module row text-center'> <input class = 'input-for-module col-md' type = 'text'>  <input  class = 'input-for-module col-md' type = 'number'>  <select class = 'input-for-module col-md'>"
-            
-        # for grade in lst: 
-        #     toReturn += "<option>" + grade + "</option>"  
-            
-        # toReturn += "</select> </div> ')"   
          
         return render(request , 'add_module.html' , ctxt)
+ 
+   
+class Calculations(View): 
+     
+    def get(self,request):  
+        return render(request , 'add_module.html' , {})
 
          
     
