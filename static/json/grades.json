@@ -1,0 +1,27 @@
+  
+[
+        { "grade" : "A1" ,  "gradePoints" : 22 },  
+        { "grade" : "A2" ,  "gradePoints" : 21 }, 
+        { "grade" : "A3" ,  "gradePoints" : 20 }, 
+        { "grade" : "A4" ,  "gradePoints" : 19 } ,
+        { "grade" : "A5" ,  "gradePoints" : 18 }, 
+        { "grade" : "B1" ,  "gradePoints" : 17 }, 
+        { "grade" : "B2" ,  "gradePoints" : 16 }, 
+        { "grade" : "B3" ,  "gradePoints" : 15 }, 
+        { "grade" : "C1" ,  "gradePoints" : 14 }, 
+        { "grade" : "C2" ,  "gradePoints" : 13 }, 
+        { "grade" : "C3" ,  "gradePoints" : 12 }, 
+        { "grade" : "D1" ,  "gradePoints" : 11}, 
+        { "grade" : "D2" ,  "gradePoints" : 10 }, 
+        { "grade" : "D3" ,  "gradePoints" : 9 }, 
+        { "grade" : "E1" ,  "gradePoints" : 8 }, 
+        { "grade" : "E2" ,  "gradePoints" : 7 }, 
+        { "grade" : "E3" ,  "gradePoints" : 6 },  
+        { "grade" : "F1" ,  "gradePoints" : 5 }, 
+        { "grade" : "F2" ,  "gradePoints" : 4 }, 
+        { "grade" : "F3" ,  "gradePoints" : 3 },
+        { "grade" : "G1" ,  "gradePoints" : 2 }, 
+        { "grade" : "G2" ,  "gradePoints" : 1 }, 
+        { "grade" : "H" ,  "gradePoints" : 0 }
+        
+]

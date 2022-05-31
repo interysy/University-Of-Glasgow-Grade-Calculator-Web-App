@@ -1,0 +1,68 @@
+{% extends 'base.html' %}  
+{% load static %}  
+
+{% block page_title %} 
+    University Of Glasgow Grade Calculator 
+{% endblock %} 
+ 
+{% block page_css %}  
+    <link rel = "stylesheet" type= "text/css" href= "{% static '/css/index.css' %}" />
+{% endblock %} 
+  
+{% block page_body %}   
+    <div class = "d-flex flex-column" > 
+        <div class = "title-content"> 
+            <img src = "{% static '/images/glasgow_logo.png' %}" class = "title-image" alt = "logo">  
+            <h2 class = "title-title"  > GPA and Grade Calculator </h2>   
+            <span class = "title-span" > For University Of Glasgow </span>   
+            <em class = "title-host"> * Hosted On PythonAnywhere * </em>
+            
+        </div>   
+        <hr>  
+        <div class = "mb-2 mt-2">
+            <p>This site is dedicated towards providing the facilities for grade calculation for University Of Glasgow. The facilities provided include: 
+            <ul> 
+                <li> GPA Calculation </li> 
+                <li> Exam Grade Calculation </li> 
+                <li> Exam Grade Needed For Target Grade </li>
+            </ul>  
+            Simply add the required modules / module component and click calculate to get your result! </p>
+        </div> 
+        <hr> 
+        <div id = "add-components"  class = "container">   
+            <div class = "gpa-calc row text-center">  
+                <p class = "col-md text-center"> <u> Module Name </u> </p> 
+                <p class = "col-md"> <u> Amount Of Credits </u>  </p>  
+                <p class = "col-md"> <u> Grade Achieved </u> </p>   
+            </div>  
+            <div id = "components">
+                <div class = "one-module row text-center"> 
+                    <input class = "input-for-module col-md text-center" type = "text">  
+                    <input  class = "input-for-module col-md text-center" type = "number">  
+                    <select class = "input-for-module col-md text-center"> 
+                        {% for grade in grades %}
+                        <option > {{ grade }} </option>
+                        {% endfor %}
+                    </select>  
+                </div>     
+                <a class="cross-icon d-inline text-center"><i class="fa fa-close"></i> Remove Above </a>
+            </div>
+            <button id = "add-btn" class = "btn btn-secondary mb-2 mt-2"> Add Module ... </button>
+        </div>  
+        <hr>
+        <button class = "btn btn-primary "> Calculate GPA </button> 
+        <hr>  
+        <div class = "row"> 
+            <button class = "btn col-md ml-1 mr-1"> Calculate GPA </button>  
+            <button class = "btn col-md ml-1 mr-1"> Exam Grade Needed For Target Grade </button>  
+            <button class = "btn col-md ml-1 mr-1"> Exam Grade Achieved </button> 
+
+    </div> 
+
+    
+{% endblock %} 
+  
+{% block page_javascript %}  
+    <script src="{% static 'javascript/main.js' %}"></script> 
+{% endblock %} 
+
