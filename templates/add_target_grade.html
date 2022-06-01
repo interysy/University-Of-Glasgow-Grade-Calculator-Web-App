@@ -1,0 +1,9 @@
+  
+<div class = "marginalised text-center added">
+    <label for = "target-grade" > {{ label }} </label> 
+    <select name = "target-grade" class = "input-for-module col-md grades"> 
+        {% for grade in grades %}
+        <option > {{ grade }} </option>
+        {% endfor %}
+    </select>   
+</div>

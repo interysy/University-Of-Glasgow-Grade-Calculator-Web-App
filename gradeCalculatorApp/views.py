@@ -9,33 +9,44 @@ import math
 def index(request):  
     lst = ["A1" , "A2" , "A3" , "A4" , "A5" , "B1" , "B2" , "B3" , "C1" , "C2"]
     return render(request , 'index.html' , {'grades' : lst}) 
+      
+def get_grades(): 
+    file = open('./static/json/grades.json')  
+    grades = json.load(file)    
+    file.close()  
+    return grades 
      
-         
+def get_points():  
+    file_with_points = open('./static/json/points.json') 
+    points = json.load(file_with_points)  
+    file_with_points.close() 
+    return points
+
+
+def add_target_grade(request):  
+    return render(request , 'add_target_grade.html' , {'grades':get_grades() , 'label' : "Target Grade"}) 
+     
+def add_achieved_grade(request): 
+    return render(request , 'add_target_grade.html' , {'grades':get_grades() , 'label' : "Final Grade"})
+
 class AddModule(View):  
      
     def __init__(self):  
-        file = open('./static/json/grades.json')  
-        self.data = json.load(file)   
+        self.grades = get_grades()
         
     def get(self,request):  
           
         ctxt = {} 
-        grades = []
-        for line in self.data: 
-            grades.append(line) 
-        ctxt['grades'] = grades
+        ctxt['grades'] = self.grades
 
          
-        return render(request , 'add_module.html' , ctxt)
- 
+        return render(request , 'add_module.html' , ctxt) 
    
 class CalculateResults(View):  
      
     def __init__(self):  
-        file_with_grades = open('./static/json/grades.json')   
-        file_with_points = open('./static/json/points.json')
-        self.grades = json.load(file_with_grades)   
-        self.points = json.load(file_with_points) 
+        self.points = get_points()
+        self.grades = get_grades()
      
     def get(self,request):    
         if 'type' in request.GET: 
@@ -60,11 +71,11 @@ class CalculateResults(View):
                 totalCredits += int(credits[i]) 
                  
             final_points = math.floor(result / totalCredits)   
-            final_grade = self.points[str(final_points)]
+            final_grade = self.points[str(final_points)]['grade']
 
 
                  
-        return render(request , 'result.html' , {'points' : final_points , 'grade' : final_grade}) 
+        return render(request , 'result.html' , {'points' : final_points , 'grade' : final_grade , 'string': "You have a GPA of"}) 
         
 
          

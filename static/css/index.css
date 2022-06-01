@@ -45,4 +45,14 @@ body {
  
 #result-p { 
     margin: 0.2rem;
+} 
+ 
+.add-mod-btn { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+} 
+ 
+.marginalised { 
+    margin: 1%;
 }

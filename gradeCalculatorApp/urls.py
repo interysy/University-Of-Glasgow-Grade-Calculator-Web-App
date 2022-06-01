@@ -1,7 +1,4 @@
-app_name = "Grade Calculator" 
- 
-  
-
+app_name = "Grade Calculator"  
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -17,5 +14,7 @@ urlpatterns = [
                   # Home Page
                   path('', views.index, name='index'),
                   path('addModule/', views.AddModule.as_view(), name='addModule'), 
-                  path('calculateResult/' , views.CalculateResults.as_view() , name = "calculateResults"),
+                  path('calculateResult/' , views.CalculateResults.as_view() , name = "calculateResults"), 
+                  path('addTargetGrade/' , views.add_target_grade , name = "addTargetGrade"), 
+                  path('addAchievedGrade/' , views.add_achieved_grade , name = "addAchievedGrade"),
               ]
