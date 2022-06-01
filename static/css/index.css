@@ -41,4 +41,8 @@ body {
 .cross-icon { 
     margin: 0; 
     padding: 0;
+} 
+ 
+#result-p { 
+    margin: 0.2rem;
 }

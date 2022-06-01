@@ -1,4 +1,3 @@
-
 $(document).ready( function() {  
        
      
@@ -16,29 +15,37 @@ $(document).ready( function() {
         $(this).remove();
         console.log("TEST");
     });
-      
+       
+
     // calculating result
-    $("#result-btn").click(function() {  
+    $("#result-btn").click( function() {  
         var type = $("#type").text();   
         var credits = [];
-        $('.credits').each(function() { 
-             credits.push(this.value);
+        $('.credits').each(function() {  
+             if (this.value != '') {
+                credits.push(this.value); 
+             }
         });  
-        console.log(credits);  
           
         var grades = [];
-        $(".grades").each(function() { 
+        $(".grades").each(function() {  
             grades.push(this.value);
         }) 
          
-        console.log(grades);
-  
-        credits = JSON.stringify(credits);
-        grades = JSON.stringify(grades); 
+         
+        if (credits.length != 0) {
+            credits = JSON.stringify(credits);
+            grades = JSON.stringify(grades);  
+            
+            
+            $.get('/calculateResult' , {'type': type , 'credits' : credits , 'grades' : grades} ,  function(result) { 
+                $("#result-p").replaceWith(result); });
+        } else { 
+            $("#result-p").text("Incomplete details - cannot compute");
+        }
 
-        $.get('/calculateResult' , {'type': type , 'credits' : credits , 'grades' : grades} ,  function(result) { 
-            $("#result-p").replaceWith(result);
-        })
+    })
+
     })  
      
      
@@ -47,4 +54,4 @@ $(document).ready( function() {
      
 
 
-})
+
