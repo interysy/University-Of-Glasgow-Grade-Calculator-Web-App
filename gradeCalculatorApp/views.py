@@ -30,30 +30,33 @@ def add_achieved_grade(request):
     return render(request , 'add_target_grade.html' , {'grades':get_grades() , 'label' : "Final Grade" , 'function' : None})
  
   
-def calculate_exam_grade_required(request): 
-    # totalToSubtract = 0
-    # totalWorth = 0
-    # FinalGrade finalGrade = (FinalGrade) courseworkList.get(0);
-    # courseworkList = courseworkList.subList(1, courseworkList.size());
-
-
-    # for (Object coursework : courseworkList) {
-
-    #         Coursework coursework1 = (Coursework) coursework;
-    #         totalWorth = totalWorth + ((coursework1.getWorth()) / 100);
-    #         totalToSubtract = totalToSubtract + (coursework1.worthXPoints());
-
-
-    #     }
-
-    # double gradeAsPoints = (finalGrade.getGrade().getNumericalGrade()) - 0.5;
-    # double examWorth = 1 - totalWorth;
-
-
-    # double result1 = (gradeAsPoints - totalToSubtract);
-    # double result2 = result1 / examWorth;
-    # int result3 = (int) Math.round(result2);  
-    return None
+def calculate_exam_grade(request):  
+    convert_grades = get_grades() 
+    convert_points = get_points() 
+ 
+    print(request.GET)
+    if 'worths' in request.GET and 'grades' in request.GET and 'gradeAchieved' in request.GET:  
+        worths = json.loads(request.GET['worths'])
+        grades = json.loads(request.GET['grades'])
+        gradeAchieved = request.GET['gradeAchieved']
+        if len(worths) == 0 or len(grades) == 0: 
+                return render(request , 'result.html' , {'result' : None})  
+        
+        totalToSubtract = 0
+        totalWorth = 0  
+        for i in range(len(grades)):  
+            print(worths[i])
+            totalWorth += ( float(worths[i]) / 100) 
+            totalToSubtract += ( (float(worths[i]) / 100) * int(convert_grades[grades[i]]['gradePoints']) )  
+                 
+        examWorth = 1 - totalWorth  
+        gradeAchievedAsPoints = convert_grades[gradeAchieved.strip()]['gradePoints'] 
+             
+        result = math.floor((gradeAchievedAsPoints - totalToSubtract)  / examWorth) 
+        print(result)
+        return render(request , 'result.html' , {'points' : result , 'grade' : convert_points[str(result)]['grade'] , 'string': "Your Exam Grade "}) 
+    else: 
+        return render(request , 'result.html' , {'result' : None})  
 
 class AddModule(View):  
      

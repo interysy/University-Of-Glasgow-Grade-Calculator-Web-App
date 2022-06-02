@@ -18,12 +18,14 @@ $(document).ready( function() {
         clearInputs();
         changeRequiredText("Exam Grade Needed For Target Grade" , "Coursework Name" , "Coursework Worth" , "Calculate Exam Grade Needed" , "Add a piece of coursework ...");
         addExtraDropdown('/addTargetGrade');
+        changeOnClick("calculateTargetGrade()");
     }) 
      
     $("#btn-change-to-exam").click(function() {  
         clearInputs();
         changeRequiredText("Exam Grade Achieved" , "Coursework Name" , "Coursework Worth" , "Calculate Exam Grade Achieved" , "Add Coursework Piece");
-        addExtraDropdown('/addAchievedGrade')
+        addExtraDropdown('/addAchievedGrade') ;
+        changeOnClick("calculateExamGrade()");
          
        
     }) 
@@ -34,13 +36,20 @@ $(document).ready( function() {
          
         if ($(".added").length != 0) { 
             $(".added").remove();
-        }
+        } 
+        changeOnClick("calculateGPA()");
 
         
     })
  
     })  
-     
+      
+function changeOnClick(func) {  
+    $("#result-btn").attr('onClick' , func);
+    
+
+
+}
 function addExtraDropdown(url) {  
     if ($(".added").length == 0) { 
         $.get(url, function(data) { 
@@ -73,7 +82,39 @@ function changeRequiredText(type , tableHeadingOne , tableHeadingTwo , resultBtn
     $("#add-btn").text(addBtnText);   
 }
 
+       
+function calculateExamGrade() { 
+    var worths = [] 
+    var grades = []  
      
+    $('.credits').each(function() {  
+        if (this.value != '') {
+            worths.push(this.value); 
+            }
+        });  
+          
+    var grades = [];
+    $(".grades").each(function() {  
+        grades.push(this.value);
+    })  
+       
+    gradeAchieved = $( "#extra-grade option:selected" ).text();
+    console.log(gradeAchieved);
+     
+    if (worths.length != 0 && grades.length != 0) {
+        worths = JSON.stringify(worths);
+        grades = JSON.stringify(grades);  
+            
+            
+        $.get('/calculateExamGrade' , {'worths' : worths , 'grades' : grades , 'gradeAchieved' : gradeAchieved } ,  function(result) { 
+            $("#result-p").replaceWith(result); });
+    } else { 
+        $("#result-p").text("Incomplete details - cannot compute");
+    }
+
+     
+
+}
       
 function calculateGPA() {   
 
