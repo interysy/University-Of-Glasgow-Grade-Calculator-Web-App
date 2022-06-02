@@ -1,4 +1,4 @@
-from bdb import GENERATOR_AND_COROUTINE_FLAGS
+
 from django.shortcuts import render  
 from django.views import View
 import json 
@@ -24,10 +24,36 @@ def get_points():
 
 
 def add_target_grade(request):  
-    return render(request , 'add_target_grade.html' , {'grades':get_grades() , 'label' : "Target Grade"}) 
+    return render(request , 'add_target_grade.html' , {'grades':get_grades() , 'label' : "Target Grade" , 'function' : None}) 
      
 def add_achieved_grade(request): 
-    return render(request , 'add_target_grade.html' , {'grades':get_grades() , 'label' : "Final Grade"})
+    return render(request , 'add_target_grade.html' , {'grades':get_grades() , 'label' : "Final Grade" , 'function' : None})
+ 
+  
+def calculate_exam_grade_required(request): 
+    # totalToSubtract = 0
+    # totalWorth = 0
+    # FinalGrade finalGrade = (FinalGrade) courseworkList.get(0);
+    # courseworkList = courseworkList.subList(1, courseworkList.size());
+
+
+    # for (Object coursework : courseworkList) {
+
+    #         Coursework coursework1 = (Coursework) coursework;
+    #         totalWorth = totalWorth + ((coursework1.getWorth()) / 100);
+    #         totalToSubtract = totalToSubtract + (coursework1.worthXPoints());
+
+
+    #     }
+
+    # double gradeAsPoints = (finalGrade.getGrade().getNumericalGrade()) - 0.5;
+    # double examWorth = 1 - totalWorth;
+
+
+    # double result1 = (gradeAsPoints - totalToSubtract);
+    # double result2 = result1 / examWorth;
+    # int result3 = (int) Math.round(result2);  
+    return None
 
 class AddModule(View):  
      
@@ -49,12 +75,7 @@ class CalculateResults(View):
         self.grades = get_grades()
      
     def get(self,request):    
-        if 'type' in request.GET: 
-            type = request.GET['type'] 
-        else: 
-            type = None 
-              
-        if type == "GPA":   
+        if 'credits' in request.GET and 'grades' in request.GET: 
             credits = json.loads(request.GET['credits']); 
             local_grades = json.loads(request.GET['grades']); 
                
