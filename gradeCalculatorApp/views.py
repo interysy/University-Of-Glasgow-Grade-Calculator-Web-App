@@ -34,7 +34,6 @@ def calculate_exam_grade(request):
     convert_grades = get_grades() 
     convert_points = get_points() 
  
-    print(request.GET)
     if 'worths' in request.GET and 'grades' in request.GET and 'gradeAchieved' in request.GET:  
         worths = json.loads(request.GET['worths'])
         grades = json.loads(request.GET['grades'])
@@ -53,7 +52,6 @@ def calculate_exam_grade(request):
         gradeAchievedAsPoints = convert_grades[gradeAchieved.strip()]['gradePoints'] 
              
         result = math.floor((gradeAchievedAsPoints - totalToSubtract)  / examWorth) 
-        print(result)
         return render(request , 'result.html' , {'points' : result , 'grade' : convert_points[str(result)]['grade'] , 'string': "Your Exam Grade "}) 
     else: 
         return render(request , 'result.html' , {'result' : None})  

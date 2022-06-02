@@ -82,11 +82,10 @@ function changeRequiredText(type , tableHeadingOne , tableHeadingTwo , resultBtn
     $("#add-btn").text(addBtnText);   
 }
 
-       
-function calculateExamGrade() { 
-    var worths = [] 
-    var grades = []  
-     
+         
+function collectValues() {  
+    worths = [] 
+    grades = [] 
     $('.credits').each(function() {  
         if (this.value != '') {
             worths.push(this.value); 
@@ -96,7 +95,16 @@ function calculateExamGrade() {
     var grades = [];
     $(".grades").each(function() {  
         grades.push(this.value);
-    })  
+    })   
+     
+    return [worths , grades]
+
+}
+function calculateExamGrade() { 
+    
+    collected = collectValues(); 
+    worths = collected[0]; 
+    grades = collected[1];
        
     gradeAchieved = $( "#extra-grade option:selected" ).text();
     console.log(gradeAchieved);
@@ -117,19 +125,11 @@ function calculateExamGrade() {
 }
       
 function calculateGPA() {   
-
-    var credits = []; 
-    $('.credits').each(function() {  
-        if (this.value != '') {
-            credits.push(this.value); 
-            }
-        });  
           
-    var grades = [];
-    $(".grades").each(function() {  
-        grades.push(this.value);
-    }) 
-         
+    collected = collectValues();
+    credits = collected[0];  
+    grades = collected[1];
+
          
     if (credits.length != 0) {
         credits = JSON.stringify(credits);
