@@ -99,6 +99,27 @@ function collectValues() {
      
     return [worths , grades]
 
+} 
+ 
+function calculateTargetGrade() {  
+    collected = collectValues(); 
+    worths = collected[0]; 
+    grades = collected[1]; 
+     
+    gradeAchieved = $( "#extra-grade option:selected" ).text();
+    console.log(gradeAchieved);
+     
+    if (worths.length != 0 && grades.length != 0) {
+        worths = JSON.stringify(worths);
+        grades = JSON.stringify(grades);  
+            
+            
+        $.get('/calculateExamGrade' , {'worths' : worths , 'grades' : grades , 'gradeAchieved' : gradeAchieved } ,  function(result) { 
+            $("#result-p").replaceWith(result); });
+    } else { 
+        $("#result-p").text("Incomplete details - cannot compute");
+    }
+
 }
 function calculateExamGrade() { 
     

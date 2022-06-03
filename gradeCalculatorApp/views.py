@@ -29,7 +29,7 @@ def add_target_grade(request):
 def add_achieved_grade(request): 
     return render(request , 'add_target_grade.html' , {'grades':get_grades() , 'label' : "Final Grade" , 'function' : None})
  
-  
+
 def calculate_exam_grade(request):  
     convert_grades = get_grades() 
     convert_points = get_points() 
@@ -37,7 +37,9 @@ def calculate_exam_grade(request):
     if 'worths' in request.GET and 'grades' in request.GET and 'gradeAchieved' in request.GET:  
         worths = json.loads(request.GET['worths'])
         grades = json.loads(request.GET['grades'])
-        gradeAchieved = request.GET['gradeAchieved']
+        gradeAchieved = request.GET['gradeAchieved'] 
+         
+
         if len(worths) == 0 or len(grades) == 0: 
                 return render(request , 'result.html' , {'result' : None})  
         
