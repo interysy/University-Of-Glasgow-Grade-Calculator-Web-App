@@ -1,4 +1,4 @@
-body { 
+#main { 
     max-width:550px; 
     margin: 3rem auto;
 } 
@@ -55,4 +55,11 @@ body {
  
 .marginalised { 
     margin: 1%;
-}
+} 
+ 
+.footer { 
+    padding: 2rem; 
+    background-color:whitesmoke;
+} 
+ 
+

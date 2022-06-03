@@ -1,6 +1,6 @@
 $(document).ready( function() {  
-       
-     
+        
+    
     $("#add-btn").click(function() {  
 
         $.get('/addModule', function(data) {
@@ -16,14 +16,14 @@ $(document).ready( function() {
 
     $("#btn-change-to-target").click(function() {   
         clearInputs();
-        changeRequiredText("Exam Grade Needed For Target Grade" , "Coursework Name" , "Coursework Worth" , "Calculate Exam Grade Needed" , "Add a piece of coursework ...");
+        changeRequiredText("Exam Grade Needed For Target Grade" , "Coursework Name" , "Coursework Worth (%)" , "Calculate Exam Grade Needed" , "Add a piece of coursework ...");
         addExtraDropdown('/addTargetGrade');
         changeOnClick("calculateTargetGrade()");
     }) 
      
     $("#btn-change-to-exam").click(function() {  
         clearInputs();
-        changeRequiredText("Exam Grade Achieved" , "Coursework Name" , "Coursework Worth" , "Calculate Exam Grade Achieved" , "Add Coursework Piece");
+        changeRequiredText("Exam Grade Achieved" , "Coursework Name" , "Coursework Worth (%)" , "Calculate Exam Grade Achieved" , "Add Coursework Piece");
         addExtraDropdown('/addAchievedGrade') ;
         changeOnClick("calculateExamGrade()");
          
@@ -46,10 +46,9 @@ $(document).ready( function() {
       
 function changeOnClick(func) {  
     $("#result-btn").attr('onClick' , func);
-    
+} 
+ 
 
-
-}
 function addExtraDropdown(url) {  
     if ($(".added").length == 0) { 
         $.get(url, function(data) { 
@@ -90,6 +89,9 @@ function collectValues() {
         if (this.value != '') {
             worths.push(this.value); 
             }
+        else { 
+            return false;
+        }
         });  
           
     var grades = [];
@@ -102,7 +104,11 @@ function collectValues() {
 } 
  
 function calculateTargetGrade() {  
-    collected = collectValues(); 
+    collected = collectValues();  
+    if (collected == false) {  
+        $("#result-p").text("Incomplete details - cannot compute");
+
+    }
     worths = collected[0]; 
     grades = collected[1]; 
      
@@ -123,12 +129,15 @@ function calculateTargetGrade() {
 }
 function calculateExamGrade() { 
     
-    collected = collectValues(); 
+    collected = collectValues();  
+    if (collected == false) {  
+        $("#result-p").text("Incomplete details - cannot compute");
+
+    }
     worths = collected[0]; 
     grades = collected[1];
        
     gradeAchieved = $( "#extra-grade option:selected" ).text();
-    console.log(gradeAchieved);
      
     if (worths.length != 0 && grades.length != 0) {
         worths = JSON.stringify(worths);
@@ -147,7 +156,12 @@ function calculateExamGrade() {
       
 function calculateGPA() {   
           
-    collected = collectValues();
+    collected = collectValues(); 
+    if (collected == false) {   
+        console.log("Something went wrong");
+        $("#result-p").text("Incomplete details - cannot compute");
+
+    }
     credits = collected[0];  
     grades = collected[1];
 

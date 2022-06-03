@@ -9,7 +9,8 @@
     <link rel = "stylesheet" type= "text/css" href= "{% static '/css/index.css' %}" />
 {% endblock %} 
   
-{% block page_body %}   
+{% block page_body %}    
+    <div id = "main">
     <div class = "d-flex flex-column" > 
         <div class = "title-content"> 
             <img src = "{% static '/images/glasgow_logo.png' %}" class = "title-image" alt = "logo">  
@@ -33,9 +34,9 @@
         <hr> 
         <div id = "add-components"  class = "container">   
             <div class = "gpa-calc row text-center">  
-                <p class = "col text-center"> <u> Module Name </u> </p> 
-                <p class = "col"> <u> Amount Of Credits </u>  </p>  
-                <p class = "col"> <u> Grade Achieved </u> </p>   
+                <p class = "col text-center"> Module Name  </p> 
+                <p class = "col">  Amount Of Credits   </p>  
+                <p class = "col"> Grade Achieved  </p>   
             </div>  
             <div id = "components">
                 <div class = "one-module row text-center"> 
@@ -63,13 +64,8 @@
             <button id = "btn-change-to-target" class = "btn col-md ml-1 mr-1"> Exam Grade Needed For Target Grade </button>  
             <button id = "btn-change-to-exam" class = "btn col-md ml-1 mr-1"> Exam Grade Achieved </button> 
         </div> 
- 
-    <footer>  
-
-    </footer>
-    </div> 
-
-    
+    </div>   
+    </div>
 {% endblock %} 
   
 {% block page_javascript %}  

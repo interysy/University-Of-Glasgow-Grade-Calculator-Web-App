@@ -2,7 +2,8 @@
 from django.shortcuts import render  
 from django.views import View
 import json 
-import math
+import math 
+from .forms import FeedbackForm
 
 # Create your views here.
  
@@ -28,7 +29,8 @@ def add_target_grade(request):
      
 def add_achieved_grade(request): 
     return render(request , 'add_target_grade.html' , {'grades':get_grades() , 'label' : "Final Grade" , 'function' : None})
- 
+  
+
 
 def calculate_exam_grade(request):  
     convert_grades = get_grades() 
@@ -102,5 +104,18 @@ class CalculateResults(View):
         return render(request , 'result.html' , {'points' : final_points , 'grade' : final_grade , 'string': "You have a GPA of"}) 
         
 
-         
-    
+     
+def feedback(request): 
+
+    if request.method == 'POST':
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            return None
+
+    else:
+        form = FeedbackForm()
+
+    return render(request, 'feedback_form.html', {'form': form})
+     
+def send_feedback(request): 
+    return None
