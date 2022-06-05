@@ -37,7 +37,7 @@
   
   
   #feedback-div { 
-    position : absolute;  
+    position : fixed;  
     left: 0; 
     margin: auto;
     transform: rotate(0.25turn);

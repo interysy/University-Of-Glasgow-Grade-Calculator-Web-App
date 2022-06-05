@@ -45,7 +45,7 @@ $(document).ready( function() {
     })  
        
 function validateNumericalInput(value) { 
-    return ( !(isNaN(value)) && parseInt(value) <= 120);
+    return ( !(isNaN(value)) && parseInt(value) > 0 && parseInt(value) <= 120);
 }
 function changeOnClick(func) {  
     $("#result-btn").attr('onClick' , func);
