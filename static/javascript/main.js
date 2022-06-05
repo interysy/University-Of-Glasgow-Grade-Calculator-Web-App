@@ -43,7 +43,10 @@ $(document).ready( function() {
     })
  
     })  
-      
+       
+function validateNumericalInput(value) { 
+    return ( !(isNaN(value)) && parseInt(value) <= 120);
+}
 function changeOnClick(func) {  
     $("#result-btn").attr('onClick' , func);
 } 
@@ -84,14 +87,14 @@ function changeRequiredText(type , tableHeadingOne , tableHeadingTwo , resultBtn
          
 function collectValues() {  
     worths = [] 
-    grades = [] 
+    grades = []   
+
     $('.credits').each(function() {  
-        if (this.value != '') {
+        console.log(this.value); 
+        var validation = validateNumericalInput(this.value);
+        if (this.value != '' && this.value && validation) { 
             worths.push(this.value); 
-            }
-        else { 
-            return false;
-        }
+        } 
         });  
           
     var grades = [];
@@ -101,80 +104,81 @@ function collectValues() {
      
     return [worths , grades]
 
-} 
+}  
+ 
+function validateCollected(collected) {  
+    if (collected[0].length != collected[1].length) {  
+        $("#result-p").text("Missing some inputs"); 
+        return false; 
+    } else {
+        return true; 
+    }
+}
  
 function calculateTargetGrade() {  
-    collected = collectValues();  
-    if (collected == false) {  
-        $("#result-p").text("Incomplete details - cannot compute");
-
-    }
-    worths = collected[0]; 
-    grades = collected[1]; 
+    collected = collectValues();   
      
-    gradeAchieved = $( "#extra-grade option:selected" ).text();
-    console.log(gradeAchieved);
-     
-    if (worths.length != 0 && grades.length != 0) {
-        worths = JSON.stringify(worths);
-        grades = JSON.stringify(grades);  
-            
-            
-        $.get('/calculateExamGrade' , {'worths' : worths , 'grades' : grades , 'gradeAchieved' : gradeAchieved } ,  function(result) { 
-            $("#result-p").replaceWith(result); });
-    } else { 
-        $("#result-p").text("Incomplete details - cannot compute");
+    if (validateCollected(collected)) { 
+        worths = collected[0]; 
+        grades = collected[1]; 
+        
+        gradeAchieved = $( "#extra-grade option:selected" ).text();
+        console.log(gradeAchieved);
+        
+        if (worths.length != 0 && grades.length != 0) {
+            worths = JSON.stringify(worths);
+            grades = JSON.stringify(grades);  
+                
+                
+            $.get('/calculateExamGrade' , {'worths' : worths , 'grades' : grades , 'gradeAchieved' : gradeAchieved } ,  function(result) { 
+                $("#result-p").replaceWith(result); });
+        } else { 
+            $("#result-p").text("Incomplete details - cannot compute");
+        }  
     }
-
 }
+
+
 function calculateExamGrade() { 
     
     collected = collectValues();  
-    if (collected == false) {  
-        $("#result-p").text("Incomplete details - cannot compute");
-
-    }
-    worths = collected[0]; 
-    grades = collected[1];
-       
-    gradeAchieved = $( "#extra-grade option:selected" ).text();
-     
-    if (worths.length != 0 && grades.length != 0) {
-        worths = JSON.stringify(worths);
-        grades = JSON.stringify(grades);  
-            
-            
-        $.get('/calculateExamGrade' , {'worths' : worths , 'grades' : grades , 'gradeAchieved' : gradeAchieved } ,  function(result) { 
-            $("#result-p").replaceWith(result); });
-    } else { 
-        $("#result-p").text("Incomplete details - cannot compute");
-    }
-
-     
-
+    if (validateCollected(collected)) {
+        worths = collected[0]; 
+        grades = collected[1];
+        
+        gradeAchieved = $( "#extra-grade option:selected" ).text();
+        
+        if (worths.length != 0 && grades.length != 0) {
+            worths = JSON.stringify(worths);
+            grades = JSON.stringify(grades);  
+                
+                
+            $.get('/calculateExamGrade' , {'worths' : worths , 'grades' : grades , 'gradeAchieved' : gradeAchieved } ,  function(result) { 
+                $("#result-p").replaceWith(result); });
+        } else { 
+            $("#result-p").text("Incomplete details - cannot compute");
+        } 
+    }    
 }
+
       
 function calculateGPA() {   
           
-    collected = collectValues(); 
-    if (collected == false) {   
-        console.log("Something went wrong");
-        $("#result-p").text("Incomplete details - cannot compute");
+    collected = collectValues();  
+    if (validateCollected(collected )) {
+        credits = collected[0];  
+        grades = collected[1];
 
-    }
-    credits = collected[0];  
-    grades = collected[1];
-
-         
-    if (credits.length != 0) {
-        credits = JSON.stringify(credits);
-        grades = JSON.stringify(grades);  
-            
-            
-        $.get('/calculateResult' , {'credits' : credits , 'grades' : grades} ,  function(result) { 
-            $("#result-p").replaceWith(result); });
-    } else { 
-        $("#result-p").text("Incomplete details - cannot compute");
+        if (credits.length != 0) {
+            credits = JSON.stringify(credits);
+            grades = JSON.stringify(grades);  
+                
+                
+            $.get('/calculateResult' , {'credits' : credits , 'grades' : grades} ,  function(result) { 
+                $("#result-p").replaceWith(result); });
+        } else { 
+            $("#result-p").text("Incomplete details - cannot compute");
+        } 
     }
 
 }
