@@ -128,7 +128,7 @@ def send_feedback(request):
     if request.method == 'POST':
         form = FeedbackForm(request.POST)
         if form.is_valid():
-            return 
+            return None
 
     else: 
         return None
