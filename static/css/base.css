@@ -52,16 +52,6 @@
     margin: 0.25rem;
 }  
  
-@media screen and (max-width: 1000px) { 
-    #feedback-div { 
-        position : absolute;  
-        left: 0; 
-        margin: auto;
-        transform: rotate(0.25turn);
-        transition: margin-left .5s; /* If you want a transition effect */
-        padding: 20px; 
-      }
-}
  
 .navbar-brand { 
     position: absolute;
