@@ -8,8 +8,11 @@ from .forms import FeedbackForm
 # Create your views here.
  
 def index(request):  
-    lst = ["A1" , "A2" , "A3" , "A4" , "A5" , "B1" , "B2" , "B3" , "C1" , "C2"]
-    return render(request , 'index.html' , {'grades' : lst}) 
+    
+    form = FeedbackForm()
+
+    
+    return render(request , 'index.html' , {'grades' : get_grades , 'form' : form}) 
       
 def get_grades(): 
     file = open('./static/json/grades.json')  
@@ -55,8 +58,11 @@ def calculate_exam_grade(request):
         examWorth = 1 - totalWorth  
         gradeAchievedAsPoints = convert_grades[gradeAchieved.strip()]['gradePoints'] 
              
-        result = math.floor((gradeAchievedAsPoints - totalToSubtract)  / examWorth) 
-        return render(request , 'result.html' , {'points' : result , 'grade' : convert_points[str(result)]['grade'] , 'string': "Your Exam Grade "}) 
+        result = math.floor((gradeAchievedAsPoints - totalToSubtract)  / examWorth)  
+        if (result < 0): 
+            result = 0 
+
+        return render(request , 'result.html' , {'points' : result , 'grade' : convert_points[str(result)]['grade'] , 'string': "Exam Grade : "}) 
     else: 
         return render(request , 'result.html' , {'result' : None})  
 
@@ -117,5 +123,12 @@ def feedback(request):
 
     return render(request, 'feedback_form.html', {'form': form})
      
-def send_feedback(request): 
-    return None
+def send_feedback(request):  
+    print("Feedbacking")
+    if request.method == 'POST':
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            return 
+
+    else: 
+        return None

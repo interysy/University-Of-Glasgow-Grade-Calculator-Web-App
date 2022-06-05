@@ -161,7 +161,19 @@ function calculateExamGrade() {
     }    
 }
 
-      
+function manipulateSideBar() { 
+     
+    if ($('#feedback-sidebar').css("width") == "250px") { 
+        $("#feedback-sidebar").css("width" , "0");
+        $("#feedback-div").css("marginLeft" , "0"); 
+        $("#shbtn").show();
+    } else {
+        $("#feedback-sidebar").css("width" , '250px');
+        $("#feedback-div").css("marginLeft","250px"); 
+        $("#shbtn").hide();
+  }   
+}
+
 function calculateGPA() {   
           
     collected = collectValues();  

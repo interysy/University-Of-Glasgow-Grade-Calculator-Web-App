@@ -1,0 +1,70 @@
+ /* The sidebar menu - made with reference to W3Schools Example*/
+ .sidebar {
+    height: 100%; 
+    width: 0; 
+    position: fixed;
+    z-index: 1; 
+    background-color: white;
+    top: 0;
+    left: 0;
+    overflow-x: hidden; 
+    padding-top: 60px; 
+    transition: 0.5s; 
+  }
+  
+  
+  .sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    display: block;
+    transition: 0.3s;
+  }
+  
+  
+ 
+  .sidebar .close-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 25px;
+    margin-left: 50px;
+  }
+   
+  .sidebar { 
+    margin: 1rem auto;
+  }
+  
+  
+  #feedback-div { 
+    position : absolute;  
+    left: 0; 
+    margin: auto;
+    transform: rotate(0.25turn);
+    transition: margin-left .5s; /* If you want a transition effect */
+    padding: 20px; 
+    top: 50%;
+    transform: translateY(-50%) , rotate(0.25turn);
+  }
+   
+   
+.sidebar-content { 
+    margin: 0.25rem;
+}  
+ 
+@media screen and (max-width: 1000px) { 
+    #feedback-div { 
+        position : absolute;  
+        left: 0; 
+        margin: auto;
+        transform: rotate(0.25turn);
+        transition: margin-left .5s; /* If you want a transition effect */
+        padding: 20px; 
+      }
+}
+ 
+.navbar-brand { 
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+} 

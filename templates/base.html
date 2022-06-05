@@ -23,10 +23,10 @@
   <link rel = "shortcut icon" type = "image/png" href = "{% static 'images/glasgow_logo.png'%}"> 
   <script type="text/javascript" 
     src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">  
-    </script>  
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
- 
-    <script src="https://kit.fontawesome.com/1b4e7ae98b.js" crossorigin="anonymous"></script> 
+  </script>  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://kit.fontawesome.com/1b4e7ae98b.js" crossorigin="anonymous"></script>  
+  <link rel = "stylesheet" type= "text/css" href= "{% static '/css/base.css' %}" />
      
   {% block page_css %}  
 
@@ -36,30 +36,44 @@
 </head>
 
 <body>  
+ 
+  <div id="feedback-sidebar" class="sidebar">
+    <a href="javascript:void(0)" class="close-btn" onclick="manipulateSideBar()"><i class="fa fa-close"></i></a>
+    <div class = "row sidebar-content text-center">
+      <form action="/sendFeedback/" method="post">
+          {% csrf_token %}
+          {{ form }}
+          <input type="submit" value="Submit" class = "btn btn-primary marginalised">
+      </form> 
+    </div>
+  </div>  
+   
+
+  <div id="feedback-div">
+    <button class="btn btn-primary open-btn" id = "shbtn" onclick="manipulateSideBar()">Send Feedback</button>
+  </div>
 
   {% block page_body %} 
   {% endblock %}   
-  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-    <div class="col-md-4 d-flex align-items-center">
-      <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-        <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-      </a>
-      <span class="text-muted">@interysy 2022</span>
+  
+
+  <nav class="navbar sticky-bottom navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">@interysy 2022</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'gradeCalculatorApp:index' %}">Calculator <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item navbar-right">
+          <a class="nav-link" href="https://github.com/interysy" >GitHub</a>
+        </li>
+      </ul>
     </div>
-
-    <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-      <li class="ms-3"><a href="{% url 'gradeCalculatorApp:feedback'%}">Report A Problem / Suggest Improvements</a></li>
-      <li class="ms-3"><a href="https://github.com/interysy">Github</a></li>
-    </ul>
-  </footer> 
-
-  <!-- <nav class = "footer text-center"> 
-    <div class = "row">  
-      <span class = col-md>@interysy 2022</span>
-      <a href = "https://github.com/interysy" class = "col-md"> <i class="fa-brands fa-github"></i> Github</a> 
-      <a href = "{% url 'gradeCalculatorApp:feedback' %}" class = "col-md">Report A Problem / Suggest An Improvement </a>
-    </div> 
-  </nav> -->
+  </nav>
   {% block page_javascript %} 
   {% endblock %} 
  
