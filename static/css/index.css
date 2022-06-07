@@ -1,65 +1,67 @@
-#main { 
-    max-width:550px; 
+#main {
+    max-width: 550px;
     margin: 3rem auto;
-} 
- 
-.title-content { 
-    display : grid; 
-    grid-template-areas: "image title" "image span" "image host"; 
-    text-align: center;
-}  
- 
-.title-title { 
-    grid-area : title;
-} 
- 
-.title-span { 
-    grid-area: span; 
-}  
-  
-.title-host { 
-    grid-area : host;
 }
- 
-.title-image { 
-    grid-area : image; 
+
+.title-content {
+    display: grid;
+    grid-template-areas: "image title" "image span" "image host";
+    text-align: center;
+}
+
+.title-title {
+    grid-area: title;
+}
+
+.title-span {
+    grid-area: span;
+}
+
+.title-host {
+    grid-area: host;
+}
+
+.title-image {
+    grid-area: image;
     width: 125px;
-} 
- 
-  
-.input-for-module { 
-    width: 30%; 
-    text-align: center; 
-    margin: 0 1%; 
+}
+
+.input-for-module {
+    width: 30%;
+    text-align: center;
+    margin: 0 1%;
     padding: 0.5%;
 }
- 
-.one-module { 
+
+.one-module {
     margin: 1% 0;
-} 
- 
-.cross-icon { 
-    margin: 0; 
+}
+
+.cross-icon {
+    margin: 0;
     padding: 0;
-} 
- 
-#result-p { 
+}
+
+#result-p {
     margin: 0.2rem;
-} 
- 
-.add-mod-btn { 
-    display: flex; 
-    justify-content: center; 
+}
+
+.add-mod-btn {
+    display: flex;
+    justify-content: center;
     align-items: center;
-} 
- 
-.marginalised { 
+}
+
+.marginalised {
     margin: 1%;
-} 
- 
+}
 
+.btn-secondary {
+    margin: 0.3rem;
+}
 
- 
-
-
- 
+@media screen and (max-width: 1000px) {
+    #main {
+        padding: 0.5rem;
+    }
+}

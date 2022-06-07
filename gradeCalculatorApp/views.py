@@ -1,4 +1,5 @@
 
+import re
 from django.shortcuts import render  
 from django.views import View
 import json 
@@ -8,10 +9,7 @@ from .forms import FeedbackForm
 # Create your views here.
  
 def index(request):  
-    
     form = FeedbackForm()
-
-    
     return render(request , 'index.html' , {'grades' : get_grades , 'form' : form}) 
       
 def get_grades(): 
@@ -28,43 +26,51 @@ def get_points():
 
 
 def add_target_grade(request):  
-    return render(request , 'add_target_grade.html' , {'grades':get_grades() , 'label' : "Target Grade" , 'function' : None}) 
+    return render(request , 'add_target_grade.html' , {'grades':get_grades() , 'label' : "Target Grade"}) 
      
 def add_achieved_grade(request): 
-    return render(request , 'add_target_grade.html' , {'grades':get_grades() , 'label' : "Final Grade" , 'function' : None})
-  
-
-
-def calculate_exam_grade(request):  
-    convert_grades = get_grades() 
-    convert_points = get_points() 
- 
+    return render(request , 'add_target_grade.html' , {'grades':get_grades() , 'label' : "Final Grade"})
+   
+    
+def calculate_required_grade(request , type):  
+    grades_to_points_dict = get_grades() 
+    points_to_grades_dict = get_points() 
+     
     if 'worths' in request.GET and 'grades' in request.GET and 'gradeAchieved' in request.GET:  
         worths = json.loads(request.GET['worths'])
         grades = json.loads(request.GET['grades'])
-        gradeAchieved = request.GET['gradeAchieved'] 
+        grade_achieved_as_grade = request.GET['gradeAchieved']  
          
+        total_worth = 0 
+        total_to_subtract_from_target_grade = 0 
+         
+        for i in range(len(grades)):    
+            worth = float(worths[i])  
+            worth_as_decimal = (worth / 100) 
+            total_worth += worth_as_decimal
+            total_to_subtract_from_target_grade += worth_as_decimal * grades_to_points_dict[grades[i]]['gradePoints'] 
+ 
+        print(total_to_subtract_from_target_grade) 
+        print(total_worth) 
 
-        if len(worths) == 0 or len(grades) == 0: 
-                return render(request , 'result.html' , {'result' : None})  
-        
-        totalToSubtract = 0
-        totalWorth = 0  
-        for i in range(len(grades)):  
-            print(worths[i])
-            totalWorth += ( float(worths[i]) / 100) 
-            totalToSubtract += ( (float(worths[i]) / 100) * int(convert_grades[grades[i]]['gradePoints']) )  
-                 
-        examWorth = 1 - totalWorth  
-        gradeAchievedAsPoints = convert_grades[gradeAchieved.strip()]['gradePoints'] 
-             
-        result = math.floor((gradeAchievedAsPoints - totalToSubtract)  / examWorth)  
-        if (result < 0): 
-            result = 0 
+        exam_worth = 1-total_worth  
+        grade_achieved_as_points = grades_to_points_dict[grade_achieved_as_grade.strip()]['gradePoints']
+        print(grade_achieved_as_points) 
 
-        return render(request , 'result.html' , {'points' : result , 'grade' : convert_points[str(result)]['grade'] , 'string': "Exam Grade : "}) 
-    else: 
-        return render(request , 'result.html' , {'result' : None})  
+        result =((grade_achieved_as_points - total_to_subtract_from_target_grade) / exam_worth) 
+        result_rounded = math.ceil(result) 
+          
+        if type == "target": 
+            msg = "To achieve your target grade you need atleast a" 
+        elif type == "achieved": 
+            msg = f"To end up with {grade_achieved_as_grade}, you must have gotten a grade of " 
+           
+            
+        if result_rounded > 22 or result_rounded < 0: 
+            return render(request , 'result.html' , {"possible":False})
+
+        return render(request , 'result.html' , {'points' : result_rounded , 'grade' : points_to_grades_dict[str(result_rounded)]['grade'] , 'string': msg , 'possible' : True}) 
+
 
 class AddModule(View):  
      
@@ -107,7 +113,7 @@ class CalculateResults(View):
 
 
                  
-        return render(request , 'result.html' , {'points' : final_points , 'grade' : final_grade , 'string': "You have a GPA of"}) 
+        return render(request , 'result.html' , {'points' : final_points , 'grade' : final_grade , 'string': "You have a GPA of" , 'possible':True}) 
         
 
      
@@ -121,7 +127,8 @@ def feedback(request):
     else:
         form = FeedbackForm()
 
-    return render(request, 'feedback_form.html', {'form': form})
+    return render(request, 'feedback_form.html', {'form': form}) 
+
      
 def send_feedback(request):  
     print("Feedbacking")

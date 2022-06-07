@@ -17,7 +17,7 @@ urlpatterns = [
                   path('calculateResult/' , views.CalculateResults.as_view() , name = "calculateResults"), 
                   path('addTargetGrade/' , views.add_target_grade , name = "addTargetGrade"), 
                   path('addAchievedGrade/' , views.add_achieved_grade , name = "addAchievedGrade"), 
-                  path('calculateExamGrade/' , views.calculate_exam_grade , name = "calculateExamGrade"), 
+                  path('calculateRequiredGrade/<str:type>' , views.calculate_required_grade , name = "calculateRequiredGrade"), 
                   path('feedback/' , views.feedback, name = "feedback"), 
-                  path('sendFeedback/' , views.send_feedback , name = "sendFeedback"),
+                  path('sendFeedback/' , views.send_feedback , name = "sendFeedback"), 
               ]
