@@ -9,8 +9,11 @@ from .models import Feedback
 
 # Create your views here.
  
-def index(request):  
-    form = FeedbackForm()
+def index(request , successful = None):  
+    form = FeedbackForm() 
+    if successful != None:  
+        return render(request , 'index.html' , {'grades' : get_grades , 'form' : form , 'successful':successful}) 
+
     return render(request , 'index.html' , {'grades' : get_grades , 'form' : form}) 
       
 def get_grades(): 
@@ -137,8 +140,8 @@ def send_feedback(request):
         if form.is_valid(): 
             print(form.cleaned_data)
             feedback = Feedback.objects.create(message = form.cleaned_data.get("text")) 
-            feedback.save()  
-            return render(request, 'index.html' , {'successful' : True})
+            feedback.save()   
+            return index(request , True)
 
    
-    return render(request, 'index.html' , {'successful' : False})
+    return index(request,False)
