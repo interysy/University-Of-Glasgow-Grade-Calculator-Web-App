@@ -4,7 +4,8 @@ from django.shortcuts import render
 from django.views import View
 import json 
 import math 
-from .forms import FeedbackForm
+from .forms import FeedbackForm 
+from .models import Feedback
 
 # Create your views here.
  
@@ -131,11 +132,13 @@ def feedback(request):
 
      
 def send_feedback(request):  
-    print("Feedbacking")
     if request.method == 'POST':
         form = FeedbackForm(request.POST)
-        if form.is_valid():
-            return None
+        if form.is_valid(): 
+            print(form.cleaned_data)
+            feedback = Feedback.objects.create(message = form.cleaned_data.get("text")) 
+            feedback.save()  
+            return render(request, 'index.html' , {'successful' : True})
 
-    else: 
-        return None
+   
+    return render(request, 'index.html' , {'successful' : False})
