@@ -9,9 +9,11 @@ I have created this simple one-page web app in order to make it easier to calcul
 </ul>
   
  <hr>
-
+ 
+ <h2> Images </h2> 
+ 
  
  <p align="center"> 
-   See the website [here](http://gmxinterysy.eu.pythonanywhere.com/) ! 
+ <a href = "http://gmxinterysy.eu.pythonanywhere.com/" > See the website here  ! </a> 
 </p>
 
