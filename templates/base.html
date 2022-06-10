@@ -41,7 +41,14 @@
             <form action="/sendFeedback/" method="post">
                 {% csrf_token %} {{ form }}
                 <input type="submit" value="Submit" class="btn btn-primary marginalised">
-            </form>
+            </form> 
+            {% if successful == True %} 
+            <p class = "text-center"> Feedback Sent ! </p> 
+
+            {% elif successful == False %} 
+            <p class = "text-center"> Something went wrong when sending feedback, try again later </p> 
+
+        {% endif %}
         </div>
     </div>
 
