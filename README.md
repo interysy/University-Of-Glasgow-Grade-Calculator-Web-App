@@ -10,7 +10,9 @@ I have created this simple one-page web app in order to make it easier to calcul
   
  <hr>
  
- <h2> Images </h2> 
+ <h2> Images </h2>  
+   <img href = "/static/images/website_screenshot.png" alt = "Screenshot of website on pythonanywhere.com"> 
+ <hr>
  
  
  <p align="center"> 
