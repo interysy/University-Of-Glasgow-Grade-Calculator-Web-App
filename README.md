@@ -1,4 +1,4 @@
-<h1 align = "center" >University-Of-Glasgow-Grade-Calculator-Web-App </p>
+<h1 align = "center" >University-Of-Glasgow-Grade-Calculator-Web-App </h1>
 I have created this simple one-page web app in order to make it easier to calculate GPA and how well one has to do in an exam to reach target grade. The app itself always rounds down as 11.9 is not a GPA of 12 according to the university.  
  
 <h2> Technologies Used </h2>  
